@@ -52,9 +52,14 @@ class Client(object):
     def get_sdis(self):
         api_url = 'https://{}/api/sdis/'.format(self.url)
         return requests.get(api_url, headers=self.headers, verify=False).json()
+        
+    def get_virtual_machines(self, sdi_id):
+        api_url = 'https://{}/api/sdis/{}/machines/'.format(self.url,sdi_id)
+        return requests.get(api_url, headers=self.headers, verify=False).json()['user']
 
 if __name__ == "__main__":
-   client = Client()
-   response = client.create_user("test_account_2", "Password_1")
-   print(response.text)
+    client = Client()
+    machines = client.get_virtual_machines('e7b30cf0-11c9-433c-aa0e-85e487326184')
+    for m in machines:
+        print(m['name'])
    
