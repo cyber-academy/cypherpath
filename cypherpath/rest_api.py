@@ -56,10 +56,22 @@ class Client(object):
     def get_virtual_machines(self, sdi_id):
         api_url = 'https://{}/api/sdis/{}/machines/'.format(self.url,sdi_id)
         return requests.get(api_url, headers=self.headers, verify=False).json()['user']
-
+        
+    def copy_sdi(self, user, copy_from, new_name ):
+        post_data = {
+            "user":user,
+            "name":new_name,
+            "desdcription":"this is the description",
+            "remove_persistence":0,
+            "deep_copy":0,
+        }
+        api_url = 'https://{}/api/sdis/{}/copy/'.format(self.url, copy_from)
+        response = requests.post(api_url, headers=self.headers, data=post_data, verify=False)
+        return response
+        
 if __name__ == "__main__":
     client = Client()
-    machines = client.get_virtual_machines('e7b30cf0-11c9-433c-aa0e-85e487326184')
-    for m in machines:
-        print(m['name'])
-   
+    response = client.copy_sdi(1,"d20c09fd-94c4-4ec3-a1e7-1de195aa97fd","new_sdi_01",)
+    print(response.status_code)
+    print(response.text)
+    print(response.url)
