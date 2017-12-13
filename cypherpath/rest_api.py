@@ -27,21 +27,32 @@ class Client(object):
         oauth_url = 'https://{}:{}@{}/api/o/token/'.format(self.client_id, self.client_secret, self.url)
         
         response = requests.post(oauth_url, data=post_data, verify=False)
+        print(response)
         self.access_token= response.json()['access_token']
         self.headers = {'Authorization':'Bearer {}'.format(self.access_token)}
     
     def get_users(self):
         api_url = 'https://{}/api/accounts/users/'.format(self.url)
-        return requests.get(api_url, headers=self.headers, verify=False).json()
+        response = requests.get(api_url, headers=self.headers, verify=False)
+        return response.json()
+
+    def get_usernames(self):
+        names = []
+        users = self.get_users()
+        for u in users:
+            names.append(u['username'])
+        return names
 
     def get_user(self, primary_key):
         pass
 
     def create_user(self, username, password, tenancy=1):
-        post_data = {"username":username, 
-                     "password":password, 
-                     "tenancy":tenancy,
-                     "is_active":1}
+        post_data = {
+            "username":username, 
+            "password":password, 
+            "tenancy":tenancy,
+            "is_active":1
+        }
         api_url = 'https://{}/api/accounts/users/'.format(self.url)
         response = requests.post(api_url, headers=self.headers, data=post_data, verify=False)
         return response
