@@ -43,8 +43,11 @@ class Client(object):
             names.append(u['username'])
         return names
 
-    def get_user(self, primary_key):
-        pass
+    def get_user_by_username(self, username):
+        users = self.get_users()
+        for user in users:
+            if user['username'] == username:
+                return user
 
     def create_user(self, username, password, tenancy=1):
         post_data = {

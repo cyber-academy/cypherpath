@@ -13,6 +13,12 @@ def create_user_example():
 	client.create_user(username=u, password=p)
 	print(client.get_usernames())
 
+def get_user_by_username_example():
+        client = rest_api.Client()
+        username = "fundamentals_of_cyber"
+        print(client.get_user_by_username(username))
+
 if __name__ == "__main__":
-	create_user_example()
+	get_user_by_username_example()
+	
 
