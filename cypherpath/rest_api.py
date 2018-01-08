@@ -27,7 +27,6 @@ class Client(object):
         oauth_url = 'https://{}:{}@{}/api/o/token/'.format(self.client_id, self.client_secret, self.url)
         
         response = requests.post(oauth_url, data=post_data, verify=False)
-        print(response)
         self.access_token= response.json()['access_token']
         self.headers = {'Authorization':'Bearer {}'.format(self.access_token)}
     
@@ -83,6 +82,15 @@ class Client(object):
         response = requests.post(api_url, headers=self.headers, data=post_data, verify=False)
         return response
         
+    def get_sdi_url(self, user_id, sdi_id):
+        post_data = {
+            "user":user_id
+        }
+        api_url = 'https://{}/api/accounts/login/token'.format(self.url)
+        response = requests.post(api_url, headers=self.headers, data=post_data, verify=False)
+        response_url = "{}?next=/sdi/{}/topology_view/".format(response.json()["url"], sdi_id)
+        return response_url
+
 if __name__ == "__main__":
     client = Client()
     response = client.copy_sdi(1,"d20c09fd-94c4-4ec3-a1e7-1de195aa97fd","new_sdi_01",)
