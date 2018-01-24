@@ -2,6 +2,8 @@ import os
 import requests
 import urllib3
 urllib3.disable_warnings()
+import time
+
 
 class Client(object):
     def __init__(self, client_id=None, client_secret=None, cypherpath_username=None, 
@@ -65,7 +67,15 @@ class Client(object):
     def get_sdis(self):
         api_url = 'https://{}/api/sdis/'.format(self.url)
         return requests.get(api_url, headers=self.headers, verify=False).json()
-        
+
+    def get_sdi_details(self, sdi_id):
+        api_url = 'https://{}/api/sdis/{}'.format(self.url, sdi_id)
+        return requests.get(api_url, headers=self.headers, verify=False).json()
+
+    def get_sdi_status(self, sdi_id):
+        api_url = 'https://{}/api/sdis/{}'.format(self.url, sdi_id)
+        return requests.get(api_url, headers=self.headers, verify=False).json()['status']
+
     def get_virtual_machines(self, sdi_id):
         api_url = 'https://{}/api/sdis/{}/machines/'.format(self.url,sdi_id)
         return requests.get(api_url, headers=self.headers, verify=False).json()['user']
@@ -80,6 +90,18 @@ class Client(object):
         }
         api_url = 'https://{}/api/sdis/{}/copy/'.format(self.url, copy_from)
         response = requests.post(api_url, headers=self.headers, data=post_data, verify=False)
+        exists = 'An SDI with this name already exists.'
+        copying = 'The source SDI is currently being copied.'
+        while (response.status_code == 400):
+            if (response.json()[0]['message'] == exists):
+                print("The SDI allready exists")
+                break
+
+            if (response.json()[0]['message'] == copying):
+                print("The SDI is still Copying")
+                time.sleep(2)
+                response = requests.post(api_url, headers=self.headers, data=post_data, verify=False)
+
         return response
         
     def get_sdi_url(self, user_id, sdi_id):
@@ -92,8 +114,4 @@ class Client(object):
         return response_url
 
 if __name__ == "__main__":
-    client = Client()
-    response = client.copy_sdi(1,"d20c09fd-94c4-4ec3-a1e7-1de195aa97fd","new_sdi_01",)
-    print(response.status_code)
-    print(response.text)
-    print(response.url)
+    pass
