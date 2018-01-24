@@ -79,7 +79,15 @@ class Client(object):
     def get_virtual_machines(self, sdi_id):
         api_url = 'https://{}/api/sdis/{}/machines/'.format(self.url,sdi_id)
         return requests.get(api_url, headers=self.headers, verify=False).json()['user']
-        
+
+    def get_vnc_url(self, user_id, sdi_id, vm_id):
+        'https://srv1.cyberacademy.us/sdi/6631f00b-16ff-42fe-a47f-3a7a9a2f6b8f/topology/machine/1dad688a-43a8-44da-9f15-8796563ae4c4/vnc/'
+        vnc_url = 'https://{}/sdi/{}/topology/machine/{}/vnc'.format(self.url, sdi_id, vm_id)
+        return vnc_url
+
+
+
+
     def copy_sdi(self, user, copy_from, new_name ):
         post_data = {
             "user":user,
