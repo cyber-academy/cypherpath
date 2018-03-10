@@ -1,15 +1,16 @@
-from cypherpath import rest_api
-import time
+from cypherpath.rest_api.client import Client
+from cypherpath.rest_api import user
+
 
 # get_users
 def get_users_example():
-    client = rest_api.Client()
+    client = Client()
     users = client.get_users()
     print(users)
 
 
 def create_user_example():
-    client = rest_api.Client()
+    client = Client()
     u = 'test_user_01'
     p = 'password'
     client.create_user(username=u, password=p)
@@ -42,8 +43,12 @@ def get_vnc_url_example():
     client = rest_api.Client()
     print(client.get_vnc_url(user_id=user_id, sdi_id=sdi_id, vm_id=vm_id))
 
+
 if __name__ == "__main__":
-    get_vnc_url_example()
+    response = user.create_user_single_use_login_token(45)
+    print('status_code = {}'.format(response.status_code))
+    print('text = {}'.format(response.text))
+    print('json() = {}'.format(response.json()))
 
 
 
