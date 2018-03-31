@@ -18,6 +18,12 @@ def get_sdi(sdi_id):
     response = requests.get(api_url, headers=client.headers, verify=False)
     return response
 
+def get_sdi_overview(sdi_id):
+    client = Client()
+    api_url = f'https://{client.url}/api/sdis/{sdi_id}/overview'
+    response = requests.get(api_url, headers=client.headers, verify=False)
+    return response
+
 def copy_sdi(user, copy_from, new_name):
     client = Client()
     post_data = {
