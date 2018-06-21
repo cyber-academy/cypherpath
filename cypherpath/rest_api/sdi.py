@@ -48,3 +48,17 @@ def copy_sdi(user, copy_from, new_name):
             response = requests.post(api_url, headers=client.headers, data=post_data, verify=False)
 
     return response
+
+
+def delete_sdi(sdi_id):
+    client = Client()
+    api_url = f'https://{client.url}/api/sdis/{sdi_id}'
+    response = requests.delete(api_url, headers=client.headers, verify=False)
+    return response
+
+
+def get_sdi_by_user(user_pk):
+    client = Client()
+    api_url = f'https://{client.url}/api/sdis/{user_pk}'
+    response = requests.get(api_url, headers=client.headers, verify=False)
+    return response
