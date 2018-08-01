@@ -24,6 +24,24 @@ def get_sdi_overview(sdi_id):
     response = requests.get(api_url, headers=client.headers, verify=False)
     return response
 
+def get_sdi_by_user(user_pk):
+    client = Client()
+    api_url = f'https://{client.url}/api/sdis/{user_pk}'
+    response = requests.get(api_url, headers=client.headers, verify=False)
+    return response
+
+def stop_sdi(sdi_id):
+    client = Client()
+    api_url = f'https://{client.url}/api/sdis/{sdi_id}/stop'
+    response = requests.post(api_url, headers=client.headers, verify=False)
+    return response
+
+def start_sdi(sdi_id):
+    client = Client()
+    api_url = f'https://{client.url}/api/sdis/{sdi_id}/start'
+    response = requests.post(api_url, headers=client.headers, verify=False)
+    return response
+
 def copy_sdi(user, copy_from, new_name):
     client = Client()
     post_data = {
@@ -57,8 +75,3 @@ def delete_sdi(sdi_id):
     return response
 
 
-def get_sdi_by_user(user_pk):
-    client = Client()
-    api_url = f'https://{client.url}/api/sdis/{user_pk}'
-    response = requests.get(api_url, headers=client.headers, verify=False)
-    return response
