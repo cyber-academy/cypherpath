@@ -28,16 +28,15 @@ def get_sdi_status(sdi_id):
     state = ""
     status = response.get('status')
     if status:
-        if status.get('state'):
-            state = response['status']['state']
-            if state == 0:
-                state = "stopped"
-            elif state == 1:
-                state = "starting"
-            elif state == 2:
-                state = "running"
-            elif state == 3:
-                state = "stopping"
+        state = response['status']['state']
+        if state == 0:
+            state = "stopped"
+        elif state == 1:
+            state = "starting"
+        elif state == 2:
+            state = "running"
+        elif state == 3:
+            state = "stopping"
     else:
         state = "error"
 

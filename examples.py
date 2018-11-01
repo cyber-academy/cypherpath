@@ -34,12 +34,14 @@ def test_get_machines():
     parsed = json.loads(response.text)
     print('json() = {}'.format(json.dumps(parsed['user'], indent=4, sort_keys=False)))
 
+def test_sdi_status():
+    response = sdi.get_sdi_status('4bbbf390-c529-497c-a77f-bd9b6710d9d1')
+
+    print(response)
 
 if __name__ == "__main__":
-    sdi_id = '0c8bef59-4220-4c18-9d8c-678d46bdec43'
-    machine_id = '4f5f1302-98b9-4a85-a8f7-3b2d1131f76c'
-    sdi_url = utils.get_vnc_url(sdi_id=sdi_id, machine_id=machine_id, user_id=36)
-    print(sdi_url)
+    test_sdi_status()
+
 
 
 
