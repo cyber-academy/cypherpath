@@ -26,16 +26,18 @@ def get_sdi_status(sdi_id):
     api_url = f'https://{client.url}/api/sdis/{sdi_id}'
     response = requests.get(api_url, headers=client.headers, verify=False).json()
     state = ""
-    if response['status']:
-        state = response['status']['state']
-        if state == 0:
-            state = "stopped"
-        elif state == 1:
-            state = "starting"
-        elif state == 2:
-            state = "running"
-        elif state == 3:
-            state = "stopping"
+    status = response.get('status')
+    if status:
+        if status.get('state'):
+            state = response['status']['state']
+            if state == 0:
+                state = "stopped"
+            elif state == 1:
+                state = "starting"
+            elif state == 2:
+                state = "running"
+            elif state == 3:
+                state = "stopping"
     else:
         state = "error"
 
