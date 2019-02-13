@@ -183,3 +183,18 @@ def get_machines(sdi_id):
     api_url = f'https://{client.url}/api/sdis/{sdi_id}/machines/'
     response = requests.get(api_url, headers=client.headers, verify=False)
     return response
+
+
+def get_machine_status(sdi_id, machine_id):
+    client = Client()
+    api_url = f'https://{client.url}/api/sdis/{sdi_id}/machines/{machine_id}/status/'
+    response = requests.get(api_url, headers=client.headers, verify=False)
+    return response
+
+
+def start_machine(sdi_id, machine_id):
+    client = Client()
+    api_url = f'https://{client.url}/api/sdis/{sdi_id}/machines/{machine_id}/start/'
+    response = requests.put(api_url, headers=client.headers, data={}, verify=False)
+    return response
+
