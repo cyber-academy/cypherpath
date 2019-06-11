@@ -5,8 +5,7 @@ urllib3.disable_warnings()
 import time
 
 from cypherpath.rest_api.client import Client
-
-
+# get a list of sdi
 def get_sdis():
     client = Client()
     api_url = f'https://{client.url}/api/sdis/'
