@@ -49,6 +49,11 @@ def get_sdi_overview(sdi_id):
     response = requests.get(api_url, headers=client.headers, verify=False)
     return response
 
+def get_sdi_persistent_ports(sdi_id):
+    client = Client()
+    api_url = f'https://{client.url}/api/sdis/{sdi_id}/ports/'
+    response = requests.get(api_url, headers=client.headers, verify=False)
+    return response
 
 def get_sdi_by_user(user_pk):
     client = Client()
@@ -191,6 +196,11 @@ def get_machine_status(sdi_id, machine_id):
     response = requests.get(api_url, headers=client.headers, verify=False)
     return response
 
+def get_machine_details(sdi_id, machine_id):
+    client = Client()
+    api_url = f'https://{client.url}/api/sdis/{sdi_id}/machines/{machine_id}/'
+    response = requests.get(api_url, headers=client.headers, verify=False)
+    return response
 
 def start_machine(sdi_id, machine_id):
     client = Client()
