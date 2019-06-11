@@ -12,7 +12,7 @@ def get_sdis():
     response = requests.get(api_url, headers=client.headers, verify=False)
     return response
 
-
+# get sdi info
 def get_sdi(sdi_id):
     client = Client()
     api_url = f'https://{client.url}/api/sdis/{sdi_id}'
